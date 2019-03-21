@@ -13,34 +13,48 @@ One can brief summarize a generic data structure as a mean to store data in memo
 
 ## Queues
 
-
+![Queue of people!](http://www.dailyexcelsior.com/wp-content/uploads/2014/05/page1-19.jpg)
 
 Imagine you are excited to ride in this new attraction at the park. You arrive, there is a hundred people waiting in line for the same ride.
 
 Queues can be very useful when you want to process data in the order. **First in, First out** or (FIFO). Every data element must be inserted at the end and removed from the top.
 
 ```c
-typedef struct  {
-    int data
-    element *next
-} element ;
+struct element {
+    int data;
+    struct element *next;
+};
 
-struct {
-    element *start
-    element *end
-} queue* q;
+typedef struct {
+    struct element *start;
+    struct element *end;
+}queue;
+
+
+queue* q;
+
+
+void newqueue(queue* q){
+    q->start = NULL;
+    q->end = NULL;
+}
 
 /// Add element to the queue. O(1)
-void queue(element* e){
-    element* aux;
-    aux = q->end;
-    aux->next = e;
-    e->next = NULL;
-    q->end = e;
+void enqueue(struct element* e){
+    
+    if(q->start == NULL){
+        q->start = e;
+        q->end = e;
+    } else {
+        struct element* aux;
+        q->end->next = e;
+        q->end = e;
+        e->next = NULL;
+    }
 }
 
 /// Remove element from the queue O(1)
-void enqueue(element* e){
+void dequeue(struct element* e){
     e = q->start;
     q->start = e->next;
 }
@@ -48,16 +62,20 @@ void enqueue(element* e){
 /// Get size of the queue. O(n)
 int size(){
     int s = 0;
+    struct element* curr;
+    curr=q->start;
     while(curr->next != NULL){
         curr = curr->next;
         s++;
     }
-    return size;
+    return ++s;
 }
 
 /// Peek at the nth element of the queue. O(n)
-peek(int n, element* e){
+void peek(int n, struct element* e){
     int s = 0;
+    struct element* curr;
+    curr=q->start;
     e = NULL;
     while(curr->next != NULL){
         if (n==s) e = curr;
