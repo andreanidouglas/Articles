@@ -1,4 +1,4 @@
-# Ánalise de segurança do site www.naomeperturbe.com.br 
+# Análise de segurança do site www.naomeperturbe.com.br 
 
 Após determinação da ANATEL (Agência Nacional de Telecomunicações), empresas brasileiras do ramo, criaram o site [naomeperturbe.com.br](www.naomeperturbe.com.br) para cadastro de usuários que desejam não receber ligações ou SMS de telemarketing. 
 
