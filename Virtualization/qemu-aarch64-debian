@@ -1,5 +1,5 @@
 ---
-title: ARM 64bit Manjaro on your x86 PC
+title: ARM 64bit Debian on your x86 PC
 published: true
 description: Running a VM environment for arm 64bit OS like Debian
 tags: qemu, arm, debian, linux
@@ -32,16 +32,17 @@ The options `-m` sets in MegaBytes, how much memory the host (your pc) will allo
 The cpu options will specify which kind of cpu architecture to run. Several options are available in the command `qemu-system-aarch64 -cpu help` but for now lets choose cortex-a57 or cortex-a72 the smp option needs to be configured according to the host specs. In this case, 2 cores with 2 threads each.
 
 ```
--cpu cortex-a72 -M virt -accell=kvm -smp cores=2,threads=4
+-cpu cortex-a72 -M virt -smp cores=2,threads=4
 ```
 
 ##Disk and bootloader
 ARM machines unless common x86 computers do not have a bios to load all the configuration and store the bootloader. Instead we need a bootloader compatible, one of the options is the TianoCore project EDK2 compiled for arm. On most debian based distros you can find it on `/usr/share/qemu-efi-aarch/QEMU_EFI.fd` after installing package `qemu-efi-aarch64`.
 
 For system disk, we can use a create a disk with the following command `qemu-img create -f raw debian-arm.img 64G`
-Also we need a debian boot disk to install the operating system. Visit get.debian.org and download the newest arm64 image.
+Also we need a debian boot disk to install the operating system. Visit https://get.debian.org and download the newest arm64 image.
 
-we can add that to our qemu emulator with the options
+We can add that to our qemu emulator with the options
+
 ```
 -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
 -drive if=none,file=debian-arm.img,id=hd0 -device virtio-blk-device,drive=hd0 \
@@ -49,6 +50,7 @@ we can add that to our qemu emulator with the options
 ```
 
 ##Networking
+
 In order to have access to network and grab packages to enhance the debian experience we need a device for network communication. A very compatible network device is the Intel e1000.
 
 ```
@@ -68,7 +70,7 @@ Finally, we need a display to interact with the OS and appropriate video and per
 
 ##Installing debian 
 
-* Full command
+Full command
 
 ```
 qemu-system-aarch64 -m 8192 -cpu cortex-a72 -M virt -smp cores=2,threads=2 \
@@ -80,7 +82,7 @@ qemu-system-aarch64 -m 8192 -cpu cortex-a72 -M virt -smp cores=2,threads=2 \
 
 ```
 
-Now, we can boot and install debian in our virtual emulated machine. Use the terminal (that is receiving seriial data) to complete the install.
+Now, we can boot and install debian in our virtual emulated machine. Use the terminal (that is receiving serial data) to complete the install.
 
 PS: To locate the installation media:
 * Load CD-ROM drivers from removable media?: Select No
@@ -91,3 +93,5 @@ PS: To locate the installation media:
 ## Running system for use
 
 After the installation is completed, use the following command to use the system.
+
+
